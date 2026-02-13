@@ -10,7 +10,7 @@
   /* Сірий текст (placeholder, підписи) */
 
   /* INPUTS */
-  -input-bg: rgba(255, 255, 255, 0.05);
+  --input-bg: rgba(255, 255, 255, 0.05);
   --input-border: rgba(249, 249, 249, 0.1);
 
   /* ACCENTS */
