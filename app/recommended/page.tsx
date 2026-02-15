@@ -1,3 +1,11 @@
+// 'use client';
+
+import BooksRecommended from '@/components/BooksRecommended/BooksRecommended';
+
 export default function Home() {
-  return <div>Hello world</div>;
+  return (
+    <div>
+      <BooksRecommended />
+    </div>
+  );
 }

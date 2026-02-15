@@ -1,63 +1,3 @@
-// 'use client';
-// import { useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import { loginSchema } from '@/utils/validationSchemas';
-// import { login, LoginData } from '@/app/api/auth';
-// import { useRouter } from 'next/navigation';
-// import toast from 'react-hot-toast';
-// import Link from 'next/link';
-// import axios from 'axios';
-
-// export default function LoginForm() {
-//   const router = useRouter();
-
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm({
-//     resolver: yupResolver(loginSchema),
-//   });
-
-//   const onSubmit = async (data: LoginData) => {
-//     try {
-//       const response = await login(data);
-//       localStorage.setItem('token', response.token);
-//       toast.success('Congratulations again!');
-//       router.push('/recommended');
-//     } catch (error: unknown) {
-//       if (axios.isAxiosError(error)) {
-//         toast.error(error.response?.data?.message || 'Login error');
-//       }
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-//       <input
-//         {...register('email')}
-//         placeholder="Email"
-//         className="rounded border p-2 text-black"
-//       />
-//       <p className="text-xs text-red-500">{errors.email?.message}</p>
-
-//       <input
-//         {...register('password')}
-//         type="password"
-//         placeholder="Password"
-//         className="rounded border p-2 text-black"
-//       />
-//       <p className="text-xs text-red-500">{errors.password?.message}</p>
-
-//       <button type="submit" className="rounded bg-green-600 p-2 text-white">
-//         Log In
-//       </button>
-//       <Link href="/register" className="text-sm underline">
-//         Don’t have an account?
-//       </Link>
-//     </form>
-//   );
-// }
 'use client';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -126,6 +66,7 @@ export const LoginForm = () => {
             </span>
             <input
               {...register('email')}
+              autoComplete="username"
               placeholder="Your@email.com"
               className="text-foreground placeholder:text-foreground w-full border-none bg-transparent p-0 outline-none"
             />
@@ -173,6 +114,7 @@ export const LoginForm = () => {
             <input
               {...register('password')}
               type={showPassword ? 'text' : 'password'}
+              autoComplete="current-password"
               placeholder="Yourpasswordhere"
               className="placeholder:text-foreground text-foreground w-full border-none bg-transparent p-0 outline-none"
             />
