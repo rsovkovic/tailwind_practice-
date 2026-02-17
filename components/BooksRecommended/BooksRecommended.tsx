@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchBooks } from '@/app/api/auth'; // шлях до вашого axios файлу
+import { fetchBooks } from '@/app/api/books'; // шлях до вашого axios файлу
 import Image from 'next/image';
 
 export default function RecommendedPage() {

@@ -12,6 +12,7 @@ import axios from 'axios';
 
 export const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  // const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
 
   const {
