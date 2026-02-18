@@ -9,8 +9,10 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
+import { useAuthStore } from '@/lib/store/authStore';
 
 export const RegisterForm = () => {
+  const setLogin = useAuthStore((state) => state.setLogin);
   const [showPassword, setShowPassword] = useState(false);
   // const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
@@ -26,7 +28,8 @@ export const RegisterForm = () => {
   const onSubmit = async (data: RegisterData) => {
     try {
       const response = await registerUser(data);
-      localStorage.setItem('token', response.token);
+      // localStorage.setItem('token', response.token);
+      setLogin(response);
       toast.success('Registration successful!');
       router.push('/recommended');
     } catch (error: unknown) {

@@ -2,16 +2,23 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchBooks } from '@/app/api/books'; // шлях до вашого axios файлу
+import {
+  fetchBooks,
+  RecommendBooksResponse,
+  ResultBook,
+} from '@/app/api/books';
+import { useDebounce } from 'use-debounce'; // шлях до вашого axios файлу
 import Image from 'next/image';
 
 export default function RecommendedPage() {
   const [page, setPage] = useState(1);
   const [title, setTitle] = useState('');
+  const [debouncedTitle] = useDebounce(title, 500);
 
-  const { data, isLoading, isError, isPlaceholderData } = useQuery({
-    queryKey: ['books', { page, title }],
-    queryFn: () => fetchBooks({ page, title: title || undefined, limit: 10 }),
+  const { data, isLoading, isError } = useQuery<RecommendBooksResponse>({
+    queryKey: ['books', { page, title: debouncedTitle }],
+    queryFn: () =>
+      fetchBooks({ page, title: debouncedTitle || undefined, limit: 10 }),
     placeholderData: (prev) => prev, // утримує старі дані під час завантаження нових
   });
 
@@ -25,6 +32,7 @@ export default function RecommendedPage() {
           type="text"
           placeholder="Пошук за назвою..."
           className="rounded border p-2 text-black"
+          value={title}
           onChange={(e) => {
             setTitle(e.target.value);
             setPage(1); // скидаємо на 1 сторінку при пошуку
@@ -35,22 +43,25 @@ export default function RecommendedPage() {
       {/* Відладочна інформація: бачимо що приходить з API */}
       <div className="mb-6 max-h-40 overflow-auto rounded bg-gray-800 p-4 text-green-400">
         <p className="mb-2 text-xs text-gray-400"> API Response Debug:</p>
-        <pre className="text-xs">{JSON.stringify(data, null, 2)}</pre>
+        {/* <pre className="text-xs">{JSON.stringify(data, null, 2)}</pre> */}
       </div>
 
       {isLoading ? (
         <p>Завантаження...</p>
+      ) : isError ? (
+        <p className="text-red-500">Помилка завантаження книг</p>
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {data?.results.map((book) => (
+          {data?.results.map((book: ResultBook) => (
             <div key={book._id} className="rounded-lg border p-4 shadow-sm">
-              <div className="relative h-75 w-full">
+              <div className="relative mb-4 h-72 w-full">
                 <Image
-                  src={book.imageUrl}
+                  src={book.imageUrl || 'https://placehold.co'}
                   alt={book.title}
                   fill // Заповнює весь контейнер
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="rounded-lg object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="rounded-lg object-cover"
+                  priority={page === 1}
                 />
               </div>
               <h2 className="font-bold">{book.title}</h2>

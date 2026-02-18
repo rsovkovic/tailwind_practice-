@@ -12,7 +12,7 @@ export interface LoginData {
   password: string;
 }
 
-interface AuthResponse {
+export interface AuthResponse {
   name: string;
   email: string;
   token: string;
@@ -53,13 +53,13 @@ export const usersCurrent = async (): Promise<CurrentUsers> => {
   return data;
 };
 export const usersCurrentRefresh = async (
-  sid: string,
+  refreshToken: string,
 ): Promise<UsersCurrentRefreshResponse> => {
   const { data } = await api.get<UsersCurrentRefreshResponse>(
     '/users/current/refresh',
     {
       headers: {
-        Authorization: `Bearer ${sid}`,
+        Authorization: `Bearer ${refreshToken}`,
       },
     },
   );

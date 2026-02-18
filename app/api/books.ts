@@ -1,12 +1,12 @@
 import api from './api';
 
 export interface RecommendBooksResponse {
-  results: Result[];
+  results: ResultBook[];
   totalPages: number;
   page: number;
   perPage: number;
 }
-export interface Result {
+export interface ResultBook {
   _id: string;
   title: string;
   author: string;

@@ -9,8 +9,10 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
+import { useAuthStore } from '@/lib/store/authStore';
 
 export const LoginForm = () => {
+  const setLogin = useAuthStore((state) => state.setLogin);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
@@ -25,7 +27,8 @@ export const LoginForm = () => {
   const onSubmit = async (data: LoginData) => {
     try {
       const response = await login(data);
-      localStorage.setItem('token', response.token);
+      // localStorage.setItem('token', response.token);
+      setLogin(response);
       toast.success('Congratulations again!');
       router.push('/recommended');
     } catch (error: unknown) {
