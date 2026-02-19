@@ -1,22 +1,3 @@
-// import axios from 'axios';
-
-// const api = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL + '/api',
-// });
-
-// // Автоматично додаємо токен до кожного запиту
-// api.interceptors.request.use((config) => {
-//   if (typeof window !== 'undefined') {
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//   }
-//   return config;
-// });
-
-// export default api;
-
 import axios from 'axios';
 import { useAuthStore } from '@/lib/store/authStore';
 

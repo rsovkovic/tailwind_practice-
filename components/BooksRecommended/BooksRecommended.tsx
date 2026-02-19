@@ -23,15 +23,15 @@ export default function RecommendedPage() {
   });
 
   return (
-    <main className="p-8">
-      <h1 className="mb-6 text-2xl font-bold">Рекомендовані книги</h1>
+    <main className="container pt-4">
+      <h1 className="mb-6 text-2xl font-bold">Recommended</h1>
 
       {/* Поле пошуку */}
       <div className="mb-6">
         <input
           type="text"
           placeholder="Пошук за назвою..."
-          className="rounded border p-2 text-black"
+          className="bg-secondary-bg rounded border p-2"
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
+import Header from '@/components/Header/Header';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import { AuthGuard } from '@/components/AuthGuard/AuthGuard';
 
@@ -26,8 +27,10 @@ export default function RootLayout({
         className={`${montserrat.variable} ${montserrat.className} antialiased`}
       >
         <TanStackProvider>
-          {' '}
-          <AuthGuard>{children}</AuthGuard>
+          <AuthGuard>
+            <Header />
+            {children}
+          </AuthGuard>
         </TanStackProvider>
         <Toaster position="top-right" />
       </body>

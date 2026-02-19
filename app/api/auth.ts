@@ -45,7 +45,7 @@ export const login = async (userData: LoginData): Promise<AuthResponse> => {
 };
 
 export const logout = async (): Promise<void> => {
-  await api.post('/users/logout');
+  await api.post('/users/signout');
 };
 
 export const usersCurrent = async (): Promise<CurrentUsers> => {
