@@ -19,8 +19,10 @@
   --error-red: #e74a3b; /* Червоний (помилки в інпутах) */
 
   --font-family: 'Montserrat', sans-serif;
-  /* --font-family: var(--font-montserrat), sans-serif; */
-  /* header */
+
+  --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --card-transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 @theme inline {
@@ -29,6 +31,8 @@
   --color-secondary-bg: var(--bg-secondary);
   --font-sans: var(--font-family);
   --color-accent: var(--accent-blue);
+  --shadow-card: var(--card-shadow);
+  --shadow-card-hover: var(--card-shadow-hover);
 }
 
 /* @media (prefers-color-scheme: dark) {

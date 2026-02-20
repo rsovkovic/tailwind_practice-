@@ -1,6 +1,8 @@
 {
   "semi": true,
   "singleQuote": true,
+  "printWidth": 80,
   "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindAttributes": ["className"]
+  "tailwindAttributes": ["className"],
+  "tailwindFunctions": ["clsx", "twMerge"]
 }

@@ -1,33 +1,122 @@
 'use client';
 
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import {
-  fetchBooks,
-  RecommendBooksResponse,
-  ResultBook,
-} from '@/app/api/books';
-import { useDebounce } from 'use-debounce'; // шлях до вашого axios файлу
-import Image from 'next/image';
+import BookCard from '../BookCard/BookCard';
+import Pagination from '../Pagination/Pagination';
+import { RecommendBooksResponse } from '@/app/api/books'; // Імпортуємо тип для даних
 
-export default function RecommendedPage() {
-  const [page, setPage] = useState(1);
-  const [title, setTitle] = useState('');
-  const [debouncedTitle] = useDebounce(title, 500);
+interface BooksListProps {
+  data: RecommendBooksResponse | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  page: number;
+  onPageChange: (nextPage: number) => void;
+}
 
-  const { data, isLoading, isError } = useQuery<RecommendBooksResponse>({
-    queryKey: ['books', { page, title: debouncedTitle }],
-    queryFn: () =>
-      fetchBooks({ page, title: debouncedTitle || undefined, limit: 10 }),
-    placeholderData: (prev) => prev, // утримує старі дані під час завантаження нових
-  });
-
+export default function BooksRecommended({
+  data,
+  isLoading,
+  isError,
+  page,
+  onPageChange,
+}: BooksListProps) {
   return (
-    <main className="container pt-4">
-      <h1 className="mb-6 text-2xl font-bold">Recommended</h1>
+    <div className="container pt-4">
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Recommended</h2>
 
-      {/* Поле пошуку */}
-      <div className="mb-6">
+        {/* Пагінація тепер використовує пропси ззовні */}
+        {data && data.totalPages > 1 && (
+          <Pagination
+            page={page}
+            total={data.totalPages}
+            onChange={onPageChange}
+            isLoading={isLoading}
+          />
+        )}
+      </div>
+
+      {isLoading && !data ? (
+        <p>Loading...</p>
+      ) : isError ? (
+        <p className="text-red-500">Error loading books</p>
+      ) : (
+        <ul className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-4 lg:grid-cols-5">
+          {data?.results.map((book, index) => (
+            <li
+              key={book._id}
+              className="group shadow-card hover:shadow-card-hover overflow-hidden rounded-lg p-4 transition-(--card-transition) hover:-translate-y-1 hover:scale-105"
+            >
+              <BookCard book={book} index={index} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// 'use client';
+
+// import { useState } from 'react';
+// import { useQuery } from '@tanstack/react-query';
+// import { fetchBooks, RecommendBooksResponse } from '@/app/api/books';
+// import { useDebounce } from 'use-debounce';
+// import BookCard from '../BookCard/BookCard';
+// import Pagination from '../Pagination/Pagination';
+
+// export default function RecommendedPage() {
+//   const [page, setPage] = useState(1);
+//   const [title, setTitle] = useState('');
+//   const [author, setAuthor] = useState('');
+//   const [debouncedTitle] = useDebounce(title, 500);
+
+//   const { data, isLoading, isError } = useQuery<RecommendBooksResponse>({
+//     queryKey: ['books', { page, title: debouncedTitle, author }],
+//     queryFn: () =>
+//       fetchBooks({
+//         page,
+//         author,
+//         title: debouncedTitle || undefined,
+//         limit: 10,
+//       }),
+//     placeholderData: (prev) => prev,
+//   });
+
+//   return (
+//     <main className="container pt-4">
+//       <h1 className="mb-6 text-2xl font-bold">Recommended</h1>
+//       {data && data.totalPages > 1 && (
+//         <Pagination
+//           page={page}
+//           total={data.totalPages}
+//           // onChange={handlePageChange}
+//           onChange={(nextPage) => setPage(nextPage)}
+//           isLoading={isLoading}
+//         />
+//       )}
+//       {isLoading ? (
+//         <p>loading...</p>
+//       ) : isError ? (
+//         <p className="text-red-500">Error loading book</p>
+//       ) : (
+//         <ul className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-4 lg:grid-cols-5">
+//           {data?.results.map((book) => (
+//             <li
+//               key={book._id}
+//               className="group shadow-card hover:shadow-card-hover overflow-hidden rounded-lg p-4 transition-(--card-transition) hover:-translate-y-1 hover:scale-105"
+//             >
+//               <BookCard book={book} />
+//             </li>
+//           ))}
+//         </ul>
+//       )}
+//     </main>
+//   );
+// }
+
+{
+  /* Поле пошуку
+      <div className="mb-6 flex gap-2">
         <input
           type="text"
           placeholder="Пошук за назвою..."
@@ -35,32 +124,59 @@ export default function RecommendedPage() {
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
-            setPage(1); // скидаємо на 1 сторінку при пошуку
+            setPage(1);
           }}
         />
-      </div>
+        <input
+          type="text"
+          placeholder="Пошук за автором..."
+          className="bg-secondary-bg rounded border p-2"
+          value={author}
+          onChange={(e) => {
+            setAuthor(e.target.value);
+            setPage(1);
+          }}
+        />
+      </div> */
+}
 
-      {/* Відладочна інформація: бачимо що приходить з API */}
-      <div className="mb-6 max-h-40 overflow-auto rounded bg-gray-800 p-4 text-green-400">
-        <p className="mb-2 text-xs text-gray-400"> API Response Debug:</p>
-        {/* <pre className="text-xs">{JSON.stringify(data, null, 2)}</pre> */}
-      </div>
+// const handlePageChange = (nextPage: number) => {
+//   setPage(nextPage);
+//   window.scrollTo({ top: 0, behavior: 'smooth' });
+// };
 
-      {isLoading ? (
-        <p>Завантаження...</p>
-      ) : isError ? (
-        <p className="text-red-500">Помилка завантаження книг</p>
-      ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {data?.results.map((book: ResultBook) => (
-            <div key={book._id} className="rounded-lg border p-4 shadow-sm">
-              <div className="relative mb-4 h-72 w-full">
+{
+  /* Проста пагінація */
+}
+{
+  /* <div className="mt-8 flex gap-4">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage((p) => p - 1)}
+          className="rounded bg-black px-4 py-2 text-white disabled:bg-gray-300"
+        >
+          Back
+        </button>
+        <button
+          disabled={data && page >= data.totalPages}
+          onClick={() => setPage((p) => p + 1)}
+          className="rounded bg-black px-4 py-2 text-white disabled:bg-gray-300"
+        >
+          Forward
+        </button>
+      </div> */
+}
+
+// className="shadow-card hover:shadow-card-hover rounded-lg border border-white/10 p-4 transition-(--card-transition) hover:-translate-y-1 hover:scale-[1.03]"
+
+{
+  /* <div className="relative mb-4 h-72 w-full">
                 <Image
                   src={book.imageUrl || 'https://placehold.co'}
                   alt={book.title}
                   fill // Заповнює весь контейнер
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="rounded-lg object-cover"
+                  className="w-full rounded-lg object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                   priority={page === 1}
                 />
               </div>
@@ -68,30 +184,5 @@ export default function RecommendedPage() {
               <p className="text-sm text-gray-500">{book.author}</p>
               <div className="mt-2 inline-block rounded bg-blue-100 px-2 py-1 text-xs">
                 {book.totalPages} стор.
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Проста пагінація */}
-      <div className="mt-8 flex gap-4">
-        <button
-          disabled={page === 1}
-          onClick={() => setPage((p) => p - 1)}
-          className="rounded bg-black px-4 py-2 text-white disabled:bg-gray-300"
-        >
-          Назад
-        </button>
-        <span className="self-center font-medium">Сторінка {page}</span>
-        <button
-          disabled={data && page >= data.totalPages}
-          onClick={() => setPage((p) => p + 1)}
-          className="rounded bg-black px-4 py-2 text-white disabled:bg-gray-300"
-        >
-          Вперед
-        </button>
-      </div>
-    </main>
-  );
+              </div> */
 }
