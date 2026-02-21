@@ -13,27 +13,28 @@ export default function Pagination({
   isLoading,
 }: PaginationProps) {
   return (
-    <nav className="flex gap-1">
+    <nav className="flex gap-2">
       <button
         type="button"
-        className="rounded-full border border-gray-600 p-2 transition-all disabled:cursor-not-allowed disabled:opacity-20"
+        className="flex, items-center, hover:border-foreground h-8 w-8 justify-center rounded-full border border-gray-600 p-2 transition duration-200 ease-out hover:bg-gray-800 active:enabled:scale-95 disabled:cursor-not-allowed disabled:opacity-20 sm:h-10 sm:w-10"
         onClick={() => onChange(page - 1)}
         disabled={page <= 1 || isLoading}
         aria-label="Previous page"
       >
-        <svg width="40" height="40" className="fill-none stroke-white">
+        <svg className="h-4 w-4 stroke-white sm:h-5 sm:w-5">
           <use href="/sprite.svg#icon-chevron-left" />
         </svg>
         {/* <ChevronLeft size={40} /> */}
       </button>
       <button
         type="button"
-        className="rounded-full border border-gray-600 p-2 text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:border-gray-700 disabled:opacity-20 disabled:hover:bg-transparent"
+        className="flex, items-center, hover:border-foreground h-8 w-8 justify-center rounded-full border border-gray-600 p-2 transition duration-200 ease-out hover:bg-gray-800 active:enabled:scale-95 disabled:cursor-not-allowed disabled:opacity-20 sm:h-10 sm:w-10"
         onClick={() => onChange(page + 1)}
         disabled={page >= total || isLoading}
+        aria-label="Next page"
       >
         {/* <ChevronRight size={40} /> */}
-        <svg width="40" height="40" className="fill-none stroke-white">
+        <svg className="h-4 w-4 stroke-white sm:h-5 sm:w-5">
           <use href="/sprite.svg#icon-chevron-right" />
         </svg>
       </button>

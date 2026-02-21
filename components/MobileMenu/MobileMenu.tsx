@@ -42,7 +42,7 @@
 
 'use client';
 
-import { X } from 'lucide-react';
+// import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MainNavigation from '../MainNavigation/MainNavigation';
 
@@ -76,8 +76,11 @@ export const MobileMenu = ({ isOpen, onClose, onLogout }: MobileMenuProps) => {
             className="absolute top-0 right-0 bottom-0 flex w-2/3 flex-col bg-zinc-900 p-8 shadow-2xl"
           >
             {/* Close Button */}
-            <button className="self-end text-white" onClick={onClose}>
-              <X size={32} />
+            <button className="self-end" onClick={onClose}>
+              <svg className="h-7 w-7 stroke-white">
+                <use href="/sprite.svg#icon-close-menu" />
+              </svg>
+              {/* <X size={32} /> */}
             </button>
 
             {/* UserNav */}
@@ -92,7 +95,7 @@ export const MobileMenu = ({ isOpen, onClose, onLogout }: MobileMenuProps) => {
                   onLogout();
                   onClose();
                 }}
-                className="rounded-full border border-white/20 px-5 py-3 font-bold text-white transition-colors hover:bg-white hover:text-black active:scale-95"
+                className="rounded-full border border-white/20 px-5 py-3 font-bold text-white transition duration-200 ease-out hover:bg-white hover:text-black active:scale-95"
               >
                 Log out
               </button>

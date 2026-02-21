@@ -1,5 +1,5 @@
 'use client';
-import { Menu } from 'lucide-react';
+// import { Menu } from 'lucide-react';
 import { logout as logoutApi } from '@/app/api/auth';
 import toast from 'react-hot-toast';
 import MainNavigation from '../MainNavigation/MainNavigation';
@@ -64,7 +64,7 @@ export default function Header() {
 
             {/* Log out (тільки десктоп) */}
             <button
-              className="hidden rounded-full border border-white/20 px-5 py-3 font-bold text-white transition-colors hover:bg-white hover:text-black active:scale-95 md:block"
+              className="hidden rounded-full border border-white/20 px-5 py-3 font-bold text-white transition duration-200 ease-out hover:bg-white hover:text-black active:scale-95 md:block"
               onClick={handleLogout}
             >
               Log out
@@ -72,7 +72,10 @@ export default function Header() {
 
             {/* Бургер-іконка (тільки мобайл/планшет) */}
             <button className="md:hidden" onClick={() => setIsMenuOpen(true)}>
-              <Menu size={28} />
+              <svg className="h-7 w-7 stroke-white">
+                <use href="/sprite.svg#icon-burger-menu" />
+              </svg>
+              {/* <Menu size={28} /> */}
             </button>
           </div>
         </div>

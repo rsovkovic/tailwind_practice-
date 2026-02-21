@@ -39,32 +39,38 @@ interface Props {
   book: ResultBook;
   index: number;
   onClick?: () => void; // Додаємо проп для кліку (відкриття модалки)
+  className?: string;
 }
 
-export default function BookCard({ book, index, onClick }: Props) {
+export default function BookCard({
+  book,
+  index,
+  onClick,
+  className = '',
+}: Props) {
   return (
     <div
       onClick={onClick}
-      className="w-full max-w-34.25 cursor-pointer sm:max-w-47.5" // Обмежуємо ширину згідно з макетом
+      className={`group w-full cursor-pointer ${className}`} // Обмежуємо ширину згідно з макетом
     >
       {/* Контейнер для зображення */}
-      <div className="relative mb-2 h-53.25 w-full overflow-hidden rounded-lg sm:h-70">
+      <div className="relative mb-2 aspect-137/208 w-full overflow-hidden rounded-lg">
         <Image
           src={book.imageUrl || '/default-book.png'} // Краще мати своє дефолтне фото в public
           alt={book.title}
           fill
-          sizes="(max-width: 768px) 137px, 190px"
-          priority={index < 5}
-          className="object-cover transition-transform duration-300 hover:scale-105"
+          // sizes="(max-width: 768px) 137px, 190px"
+          priority={index < 6}
+          className="transition-transform duration-300 group-hover:scale-105"
         />
       </div>
 
       {/* Інформація про книгу */}
-      <div className="space-y-1">
-        <h2 className="truncate text-sm font-bold text-white sm:text-base">
+      <div className="flex flex-col gap-0.5">
+        <h2 className="text-foreground truncate text-sm font-bold">
           {book.title}
         </h2>
-        <p className="truncate text-xs text-[#686868] sm:text-sm">
+        <p className="truncate text-[0.625rem] font-medium text-[#686868]">
           {book.author}
         </p>
       </div>

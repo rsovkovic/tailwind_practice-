@@ -141,7 +141,7 @@ export const LoginForm = () => {
       <div className="mt-4 flex items-center gap-5">
         <button
           type="submit"
-          className="hover:bg-background bg-foreground text-background hover:text-foreground rounded-full px-10 py-3 font-bold transition-all active:scale-95"
+          className="hover:bg-background bg-foreground text-background hover:text-foreground rounded-full px-10 py-3 font-bold transition duration-200 ease-out active:scale-95"
         >
           Login in
         </button>

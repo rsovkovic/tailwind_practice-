@@ -56,7 +56,10 @@ body {
   margin: 0 auto;
 }
 
-button {
+/* button {
+  cursor: pointer;
+} */
+button:not(:disabled) {
   cursor: pointer;
 }
 

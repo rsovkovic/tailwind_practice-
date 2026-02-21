@@ -22,7 +22,7 @@ export default function BooksRecommended({
   return (
     <div className="container pt-4">
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Recommended</h2>
+        <h2 className="text-xl font-bold sm:text-3xl">Recommended</h2>
 
         {/* Пагінація тепер використовує пропси ззовні */}
         {data && data.totalPages > 1 && (
@@ -41,6 +41,7 @@ export default function BooksRecommended({
         <p className="text-red-500">Error loading books</p>
       ) : (
         <ul className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-4 lg:grid-cols-5">
+          {/* // <ul className="grid grid-cols-2 gap-x-5 gap-y-7 md:grid-cols-4 lg:grid-cols-5"> */}
           {data?.results.map((book, index) => (
             <li
               key={book._id}

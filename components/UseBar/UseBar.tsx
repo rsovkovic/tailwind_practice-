@@ -9,7 +9,7 @@ export const UserBar = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="text-foreground flex h-10 w-10 items-center justify-center rounded-full border border-(--input-border) bg-(--input-bg) text-lg font-bold">
+      <div className="text-foreground flex h-9 w-9 items-center justify-center rounded-full border border-(--input-border) bg-(--input-bg) text-base font-bold sm:h-10 sm:w-10 sm:text-lg">
         {initial}
       </div>
       {/* Приховуємо ім'я на мобайлі та планшеті згідно з логікою бургер-меню */}
