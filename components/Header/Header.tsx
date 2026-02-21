@@ -64,7 +64,7 @@ export default function Header() {
 
             {/* Log out (тільки десктоп) */}
             <button
-              className="hidden rounded-full border border-white/20 px-5 py-3 font-bold text-white transition duration-200 ease-out hover:bg-white hover:text-black active:scale-95 md:block"
+              className="text-foreground hover:bg-foreground hover:text-background hidden rounded-full border border-white/20 px-5 py-3 font-bold transition duration-200 ease-out active:scale-95 md:block"
               onClick={handleLogout}
             >
               Log out

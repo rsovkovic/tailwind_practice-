@@ -38,14 +38,20 @@ export default function BooksRecommended({
       {isLoading && !data ? (
         <p>Loading...</p>
       ) : isError ? (
-        <p className="text-red-500">Error loading books</p>
+        <p className="text-(--error-red)">Error loading books</p>
+      ) : data?.results.length === 0 ? ( // ОСЬ ТУТ ЦЯ ПЕРЕВІРКА
+        <div className="flex flex-col items-center py-20">
+          <p className="text-lg text-white">No books found for your request</p>
+          <p className="text-gray-500">Try changing the filters</p>
+        </div>
       ) : (
         <ul className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-4 lg:grid-cols-5">
           {/* // <ul className="grid grid-cols-2 gap-x-5 gap-y-7 md:grid-cols-4 lg:grid-cols-5"> */}
           {data?.results.map((book, index) => (
             <li
               key={book._id}
-              className="group shadow-card hover:shadow-card-hover overflow-hidden rounded-lg p-4 transition-(--card-transition) hover:-translate-y-1 hover:scale-105"
+              // className="transition-(--card-transition) hover:-translate-y-1"
+              // className="group shadow-card hover:shadow-card-hover overflow-hidden rounded-lg p-4 transition-(--card-transition) hover:-translate-y-1 hover:scale-105"
             >
               <BookCard book={book} index={index} />
             </li>
