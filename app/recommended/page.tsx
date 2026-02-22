@@ -2,16 +2,16 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBooks, RecommendBooksResponse } from '@/app/api/books';
-// import { useDebounce } from 'use-debounce';
+import { Dashboard } from '@/components/Dashboard/Dashboard';
+import { SupportBlock } from '@/components/Dashboard/Support';
+import { Quote } from '@/components/Dashboard/Quote';
 import BooksRecommended from '@/components/BooksRecommended/BooksRecommended';
-import { FiltersForm } from '@/components/FiltersForm/FiltersForm';
+import { FiltersForm } from '@/components/Dashboard/FiltersForm';
+// import { FiltersForm } from '@/components/FiltersForm/FiltersForm';
 
 export default function RecommendedPage() {
   const [page, setPage] = useState(1);
-  // const [title, setTitle] = useState('');
-  // const [author, setAuthor] = useState('');
   const [filters, setFilters] = useState({ title: '', author: '' });
-  // const [debouncedTitle] = useDebounce(title, 500);
 
   const handleApplyFilters = (data: { title: string; author: string }) => {
     console.log('Отримано з форми:', data);
@@ -33,15 +33,25 @@ export default function RecommendedPage() {
     placeholderData: (prev) => prev,
   });
   return (
-    <main className="container">
-      <FiltersForm onFilter={handleApplyFilters} />
-      <BooksRecommended
-        data={data}
-        isLoading={isLoading}
-        isError={isError}
-        page={page}
-        onPageChange={(nextPage) => setPage(nextPage)}
-      />
-    </main>
+    <section className="container py-10">
+      <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+        <Dashboard>
+          <FiltersForm onFilter={handleApplyFilters} />
+          <SupportBlock />
+          <div className="hidden lg:mt-20 lg:block">
+            <Quote />
+          </div>
+        </Dashboard>
+        <main className="h-fit w-full min-w-0 flex-1 rounded-[30px] bg-[#1F1F1F]">
+          <BooksRecommended
+            data={data}
+            isLoading={isLoading}
+            isError={isError}
+            page={page}
+            onPageChange={(nextPage) => setPage(nextPage)}
+          />
+        </main>
+      </div>
+    </section>
   );
 }

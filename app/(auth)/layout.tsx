@@ -14,16 +14,6 @@ export default function AuthLayout({
           {/* Логотип */}
           <div className="mb-10 flex items-center gap-2 md:mb-20">
             <div className="flex h-8 w-8 items-center justify-center">
-              {/* Сюди можна вставити SVG іконку логотипу */}
-              {/* <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M10 8H22V24H10V8Z" fill="white" />
-              </svg> */}
               <svg>
                 <use href="/sprite.svg#icon-logo" />
               </svg>

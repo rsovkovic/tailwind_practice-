@@ -1,5 +1,5 @@
 'use client';
-// import { Menu } from 'lucide-react';
+
 import { logout as logoutApi } from '@/app/api/auth';
 import toast from 'react-hot-toast';
 import MainNavigation from '../MainNavigation/MainNavigation';
@@ -75,7 +75,6 @@ export default function Header() {
               <svg className="h-7 w-7 stroke-white">
                 <use href="/sprite.svg#icon-burger-menu" />
               </svg>
-              {/* <Menu size={28} /> */}
             </button>
           </div>
         </div>

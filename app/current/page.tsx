@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { usersCurrent } from '@/app/api/auth'; // ПЕРЕВІРТЕ ШЛЯХ ДО ФАЙЛУ
+import { SupportBlock } from '@/components/Dashboard/Support';
+import { Quote } from '@/components/Dashboard/Quote';
 
 export default function TestPage() {
   const [result, setResult] = useState('Завантаження...');
@@ -23,6 +25,8 @@ export default function TestPage() {
       <h1>Результат перевірки API:</h1>
       {/* pre збереже форматування JSON, щоб було зручно читати */}
       <pre>{result}</pre>
+      <SupportBlock />
+      <Quote />
     </div>
   );
 }
