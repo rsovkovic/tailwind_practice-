@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBooks, RecommendBooksResponse } from '@/app/api/books';
 import { Dashboard } from '@/components/Dashboard/Dashboard';
@@ -12,37 +12,58 @@ import { FiltersForm } from '@/components/Dashboard/FiltersForm';
 export default function RecommendedPage() {
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({ title: '', author: '' });
+  const [limit, setLimit] = useState(10);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Якщо ширина менша за 640px (sm у Tailwind) — ставимо 2 книги
+      // Якщо від 640px до 1024px — можна поставити 4 книги
+      // Якщо більше 1024px — 10 книг (або 5, якщо хочете рівно один ряд)
+      if (window.innerWidth < 640) {
+        setLimit(2);
+      } else if (window.innerWidth < 1024) {
+        setLimit(8); // наприклад, 2 ряди по 4
+      } else {
+        setLimit(10); // 2 ряди по 5
+      }
+    };
+
+    handleResize(); // викликаємо при першому рендері
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleApplyFilters = (data: { title: string; author: string }) => {
-    console.log('Отримано з форми:', data);
+    // console.log('Отримано з форми:', data);
     setFilters(data);
     setPage(1);
   };
 
   const { data, isLoading, isError } = useQuery<RecommendBooksResponse>({
     // queryKey: ['books', { page, title: debouncedTitle, author }],
-    queryKey: ['books', page, filters],
+    queryKey: ['books', page, filters, limit],
     queryFn: () =>
       fetchBooks({
         ...filters,
         page,
         // author,
         // title: debouncedTitle || undefined,
-        limit: 10,
+        limit,
       }),
     placeholderData: (prev) => prev,
   });
   return (
-    <section className="container py-10">
-      <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+    <section className="container mx-auto">
+      <div className="mt-4 mb-8 flex flex-col items-stretch gap-4 lg:flex-row">
         <Dashboard>
           <FiltersForm onFilter={handleApplyFilters} />
           <SupportBlock />
-          <div className="hidden lg:mt-20 lg:block">
+          <div className="hidden lg:block">
             <Quote />
           </div>
         </Dashboard>
-        <main className="h-fit w-full min-w-0 flex-1 rounded-[30px] bg-[#1F1F1F]">
+
+        <div className="bg-secondary-bg min-w-0 flex-1 rounded-[30px]">
           <BooksRecommended
             data={data}
             isLoading={isLoading}
@@ -50,7 +71,7 @@ export default function RecommendedPage() {
             page={page}
             onPageChange={(nextPage) => setPage(nextPage)}
           />
-        </main>
+        </div>
       </div>
     </section>
   );

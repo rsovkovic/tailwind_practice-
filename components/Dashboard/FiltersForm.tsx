@@ -27,7 +27,7 @@ export const FiltersForm = ({ onFilter }: Props) => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex w-full max-w-md flex-col gap-3"
     >
-      <p className="text-foreground text-sm font-medium">Filters:</p>
+      <p className="text-foreground pt-8 text-sm font-medium">Filters:</p>
       <div className="focus-within:border-foreground flex items-center rounded-xl border border-(--input-border) bg-(--input-bg) px-4 py-3.5">
         <span className="mr-2 text-center text-sm font-medium whitespace-nowrap text-(--text-secondary)">
           Book title:
@@ -54,7 +54,7 @@ export const FiltersForm = ({ onFilter }: Props) => {
           className="placeholder:text-foreground text-foreground w-full border-none bg-transparent p-0 outline-none"
         />
       </div>
-      <div className="flex gap-2">
+      <div className="mt-5 flex gap-2">
         {/* Кнопка To apply */}
         <button
           type="submit"

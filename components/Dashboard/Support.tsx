@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const SupportBlock = () => {
   return (
-    <div className="mt-5 rounded-[20px] bg-(--bg-blok) p-5">
+    <div className="mt-5 rounded-[20px] bg-(--bg-blok) p-5.5">
       <h3 className="text-foreground mb-5 text-lg font-bold">
         Start your workout
       </h3>
@@ -12,7 +12,7 @@ export const SupportBlock = () => {
           <span className="bg-foreground text-secondary-bg flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold">
             1
           </span>
-          <p className="text-foreground text-sm leading-tight">
+          <p className="text-foreground text-sm leading-4">
             Create a personal library:{' '}
             <span className="text-(--text-secondary)">
               add the books you intend to read to it.
@@ -24,7 +24,7 @@ export const SupportBlock = () => {
           <span className="text-secondary-bg bg-foreground flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold">
             2
           </span>
-          <p className="text-foreground text-sm leading-tight">
+          <p className="text-foreground text-sm leading-4">
             Create your first workout:{' '}
             <span className="text-(--text-secondary)">
               define a goal, choose a period, start training.

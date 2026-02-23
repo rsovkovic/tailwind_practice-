@@ -4,7 +4,7 @@ interface DashboardProps {
 
 export const Dashboard = ({ children }: DashboardProps) => {
   return (
-    <aside className="flex h-fit w-full shrink-0 flex-col rounded-[30px] bg-[#1F1F1F] p-5 lg:w-88.25 lg:p-10">
+    <aside className="bg-secondary-bg flex h-fit w-full shrink-0 flex-col rounded-[30px] p-5 lg:w-88.25 xl:gap-5">
       {children}
     </aside>
   );

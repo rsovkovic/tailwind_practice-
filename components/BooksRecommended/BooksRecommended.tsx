@@ -20,8 +20,8 @@ export default function BooksRecommended({
   onPageChange,
 }: BooksListProps) {
   return (
-    <div className="container pt-4">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="p-10 pb-5">
+      <div className="flex items-center justify-between pb-5">
         <h2 className="text-xl font-bold sm:text-3xl">Recommended</h2>
 
         {/* Пагінація тепер використовує пропси ззовні */}
@@ -45,13 +45,15 @@ export default function BooksRecommended({
           <p className="text-gray-500">Try changing the filters</p>
         </div>
       ) : (
-        <ul className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-4 lg:grid-cols-5">
-          {/* // <ul className="grid grid-cols-2 gap-x-5 gap-y-7 md:grid-cols-4 lg:grid-cols-5"> */}
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 lg:grid-cols-5">
+          {/* // <ul className="flex snap-x flex-nowrap gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-4 lg:grid-cols-5"> */}
           {data?.results.map((book, index) => (
             <li
               key={book._id}
               // className="transition-(--card-transition) hover:-translate-y-1"
               // className="group shadow-card hover:shadow-card-hover overflow-hidden rounded-lg p-4 transition-(--card-transition) hover:-translate-y-1 hover:scale-105"
+              // className={`${index >= 2 ? 'hidden sm:block' : ''}`}
+              // className="min-w-[70%] snap-center sm:min-w-0"
             >
               <BookCard book={book} index={index} />
             </li>
