@@ -45,7 +45,7 @@ export default function BooksRecommended({
           <p className="text-gray-500">Try changing the filters</p>
         </div>
       ) : (
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 lg:grid-cols-5">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
           {/* // <ul className="flex snap-x flex-nowrap gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-4 lg:grid-cols-5"> */}
           {data?.results.map((book, index) => (
             <li

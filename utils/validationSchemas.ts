@@ -20,3 +20,13 @@ export const loginSchema = Yup.object().shape({
     .min(7, 'Password must be at least 7 characters')
     .required('Password is required'),
 });
+
+export const addBookSchema = Yup.object().shape({
+  title: Yup.string().required('Book title is required'),
+  author: Yup.string().required('Author is required'),
+  totalPages: Yup.number()
+    .typeError('Must be a number')
+    .required('Number of pages is required')
+    .positive('Must be positive')
+    .integer('Must be an integer'),
+});

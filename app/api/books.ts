@@ -21,7 +21,7 @@ export interface FetchBooksParams {
   page?: number;
   limit?: number;
 }
-interface AddNewBookRequest {
+export interface AddNewBookRequest {
   title: string;
   author: string;
   totalPages: number;

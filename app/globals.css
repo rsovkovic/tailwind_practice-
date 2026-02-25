@@ -34,6 +34,13 @@
   --color-accent: var(--accent-blue);
   --shadow-card: var(--card-shadow);
   --shadow-card-hover: var(--card-shadow-hover);
+  /* ////////// */
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1040px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -57,14 +64,40 @@ body {
   margin: 0 auto;
 }
 
-/* button {
-  cursor: pointer;
-} */
 button:not(:disabled) {
   cursor: pointer;
 }
 
-.container {
+@utility container {
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: 1.25rem;
+
+  @media (width >= theme(--breakpoint-sm)) {
+    max-width: 640px;
+    padding-inline: 1.25rem;
+  }
+
+  @media (width >= theme(--breakpoint-md)) {
+    /* max-width: 768px; */
+    max-width: 100%;
+    padding-inline: 2rem;
+  }
+  @media (width >= theme(--breakpoint-lg)) {
+    max-width: 100%;
+    /* max-width: 1040px; */
+  }
+  @media (width >= theme(--breakpoint-xl)) {
+    /* max-width: 1280px; */
+    max-width: 100%;
+  }
+
+  @media (width >= theme(--breakpoint-2xl)) {
+    max-width: 1440px;
+  }
+}
+
+/* .container {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -73,7 +106,6 @@ button:not(:disabled) {
 }
 
 @media (min-width: 640px) {
-  /* sm */
   .container {
     max-width: 640px;
     padding-left: 2rem;
@@ -82,12 +114,12 @@ button:not(:disabled) {
 }
 
 @media (min-width: 768px) {
-  /* md */
   .container {
     max-width: 768px;
   }
 }
-/* @media (min-width: 1040px) {
+
+@media (min-width: 1040px) {
   .container {
     max-width: 1040px;
     padding-left: 2rem;
@@ -109,16 +141,11 @@ button:not(:disabled) {
     padding-left: 2rem;
     padding-right: 2rem;
   }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
 } */
-@media (min-width: 1024px) {
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+/* @media (min-width: 1024px) {
   .container {
     max-width: 1280px;
     padding-left: 2rem;
@@ -141,10 +168,4 @@ button:not(:disabled) {
     padding-right: 2rem;
   }
 }
-/* @media (min-width: 1440px) {
-  .container {
-    max-width: 1536px;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-} */
+ */
