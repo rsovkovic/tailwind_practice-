@@ -9,6 +9,7 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { AxiosError } from 'axios';
+import { Button } from '../Ui/Button';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,12 +64,14 @@ export default function Header() {
             <UserBar />
 
             {/* Log out (тільки десктоп) */}
-            <button
-              className="text-foreground hover:bg-foreground hover:text-background hidden rounded-full border border-white/20 px-5 py-3 font-bold transition duration-200 ease-out active:scale-95 md:block"
+            <Button
+              type="submit"
+              variant="outline"
               onClick={handleLogout}
+              className="hidden px-5 md:block"
             >
               Log out
-            </button>
+            </Button>
 
             {/* Бургер-іконка (тільки мобайл/планшет) */}
             <button className="md:hidden" onClick={() => setIsMenuOpen(true)}>

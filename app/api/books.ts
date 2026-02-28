@@ -36,7 +36,7 @@ interface BooksProgress {
   speed: number;
   status: 'active' | 'inactive';
 }
-type BookStatus = 'unread' | 'in-progress' | 'done';
+export type BookStatus = 'unread' | 'in-progress' | 'done';
 
 interface TimeLeft {
   hours: number;

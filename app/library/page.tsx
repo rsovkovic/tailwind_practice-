@@ -3,9 +3,15 @@ import AddBookForm from '@/components/Dashboard/AddBookForm';
 import { Dashboard } from '@/components/Dashboard/Dashboard';
 import MyBooksList from '@/components/MyBooksList/MyBooksList';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addNewBook, AddNewBookRequest, BooksResponse } from '@/app/api/books';
+import {
+  addNewBook,
+  AddNewBookRequest,
+  BooksResponse,
+  RemoveBookById,
+} from '@/app/api/books';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
+import RecommendedPreview from '@/components/Dashboard/RecommendedPreview';
 
 export default function MyLibraryPage() {
   const queryClient = useQueryClient();
@@ -37,6 +43,17 @@ export default function MyLibraryPage() {
   const handleAddBook = (data: AddNewBookRequest) => {
     mutate(data);
   };
+  const { mutate: deleteBook } = useMutation({
+    mutationFn: (id: string) => RemoveBookById(id), // Твоя функція з api
+    onSuccess: () => {
+      // Оновлюємо список після видалення
+      queryClient.invalidateQueries({ queryKey: ['user-books'] });
+      toast.success('Book deleted successfully');
+    },
+    onError: () => {
+      toast.error('Failed to delete book');
+    },
+  });
 
   return (
     <section>
@@ -44,9 +61,10 @@ export default function MyLibraryPage() {
         <div className="mt-4 mb-8 flex flex-col items-start gap-4 lg:flex-row">
           <Dashboard>
             <AddBookForm onAddBook={handleAddBook} isLoading={isPending} />
+            <RecommendedPreview />
           </Dashboard>
-          <div className="bg-secondary-bg flex-1 rounded-[30px] p-5 lg:p-10">
-            <MyBooksList />
+          <div className="bg-secondary-bg size-[stretch] flex-1 rounded-[30px] p-5 lg:p-10">
+            <MyBooksList onDeleteBook={deleteBook} />
           </div>
         </div>
       </div>

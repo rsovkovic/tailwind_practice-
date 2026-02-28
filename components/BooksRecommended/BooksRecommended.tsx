@@ -1,6 +1,69 @@
+// 'use client';
+
+// import BookCard from '../BookCard/BookCard';
+// import Pagination from '../Pagination/Pagination';
+// import { RecommendBooksResponse } from '@/app/api/books'; // Імпортуємо тип для даних
+
+// interface BooksListProps {
+//   data: RecommendBooksResponse | undefined;
+//   isLoading: boolean;
+//   isError: boolean;
+//   page: number;
+//   onPageChange: (nextPage: number) => void;
+// }
+
+// export default function BooksRecommended({
+//   data,
+//   isLoading,
+//   isError,
+//   page,
+//   onPageChange,
+// }: BooksListProps) {
+//   return (
+//     <div className="p-10 pb-5">
+//       <div className="flex items-center justify-between pb-5">
+//         <h2 className="text-xl font-bold sm:text-3xl">Recommended</h2>
+
+//         {/* Пагінація тепер використовує пропси ззовні */}
+//         {data && data.totalPages > 1 && (
+//           <Pagination
+//             page={page}
+//             total={data.totalPages}
+//             onChange={onPageChange}
+//             isLoading={isLoading}
+//           />
+//         )}
+//       </div>
+
+//       {isLoading && !data ? (
+//         <p>Loading...</p>
+//       ) : isError ? (
+//         <p className="text-(--error-red)">Error loading books</p>
+//       ) : data?.results.length === 0 ? ( // ОСЬ ТУТ ЦЯ ПЕРЕВІРКА
+//         <div className="flex flex-col items-center py-20">
+//           <p className="text-lg text-white">No books found for your request</p>
+//           <p className="text-gray-500">Try changing the filters</p>
+//         </div>
+//       ) : (
+//         <ul className="grid grid-cols-2 gap-x-4 gap-y-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
+//           {/* // <ul className="flex snap-x flex-nowrap gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-4 lg:grid-cols-5"> */}
+//           {data?.results.map((book, index) => (
+//             <li key={book._id}>
+//               <BookCard book={book} index={index} />
+//             </li>
+//           ))}
+//         </ul>
+//       )}
+//     </div>
+//   );
+// }
+
+//////////////////////////////////////////////////////
+
 'use client';
 
 import BookCard from '../BookCard/BookCard';
+import { PageLoader } from '../Loader/Loader';
 import Pagination from '../Pagination/Pagination';
 import { RecommendBooksResponse } from '@/app/api/books'; // Імпортуємо тип для даних
 
@@ -19,6 +82,13 @@ export default function BooksRecommended({
   page,
   onPageChange,
 }: BooksListProps) {
+  if (isLoading && !data) {
+    return (
+      <div className="flex min-h-100 items-center justify-center">
+        <PageLoader />
+      </div>
+    );
+  }
   return (
     <div className="p-10 pb-5">
       <div className="flex items-center justify-between pb-5">
@@ -34,27 +104,27 @@ export default function BooksRecommended({
           />
         )}
       </div>
-
-      {isLoading && !data ? (
-        <p>Loading...</p>
-      ) : isError ? (
+      {/* {isLoading && (
+        <div className="inset-0 z-10 flex items-center justify-center bg-[#111111]/40 backdrop-blur-sm transition-all duration-300">
+          <PageLoader />
+        </div>
+      )} */}
+      {isError ? (
         <p className="text-(--error-red)">Error loading books</p>
       ) : data?.results.length === 0 ? ( // ОСЬ ТУТ ЦЯ ПЕРЕВІРКА
         <div className="flex flex-col items-center py-20">
-          <p className="text-lg text-white">No books found for your request</p>
-          <p className="text-gray-500">Try changing the filters</p>
+          <p className="text-foreground text-lg">
+            No books found for your request
+          </p>
+          <p className="text-(--text-secondary)">Try changing the filters</p>
         </div>
       ) : (
+        // <ul
+        //   className={`grid grid-cols-2 gap-x-4 gap-y-4 transition-opacity duration-200 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 ${isLoading ? 'opacity-50' : 'opacity-100'}`}
+        // >
         <ul className="grid grid-cols-2 gap-x-4 gap-y-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
-          {/* // <ul className="flex snap-x flex-nowrap gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-4 lg:grid-cols-5"> */}
           {data?.results.map((book, index) => (
-            <li
-              key={book._id}
-              // className="transition-(--card-transition) hover:-translate-y-1"
-              // className="group shadow-card hover:shadow-card-hover overflow-hidden rounded-lg p-4 transition-(--card-transition) hover:-translate-y-1 hover:scale-105"
-              // className={`${index >= 2 ? 'hidden sm:block' : ''}`}
-              // className="min-w-[70%] snap-center sm:min-w-0"
-            >
+            <li key={book._id}>
               <BookCard book={book} index={index} />
             </li>
           ))}

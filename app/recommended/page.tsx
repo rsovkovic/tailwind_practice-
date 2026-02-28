@@ -63,7 +63,7 @@ export default function RecommendedPage() {
             </div>
           </Dashboard>
 
-          <div className="bg-secondary-bg min-w-0 flex-1 rounded-[30px]">
+          <div className="bg-secondary-bg size-[stretch] min-w-0 flex-1 rounded-[30px]">
             <BooksRecommended
               data={data}
               isLoading={isLoading}
