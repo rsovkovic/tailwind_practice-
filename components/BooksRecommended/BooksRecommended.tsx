@@ -65,7 +65,7 @@
 import BookCard from '../BookCard/BookCard';
 import { PageLoader } from '../Loader/Loader';
 import Pagination from '../Pagination/Pagination';
-import { RecommendBooksResponse } from '@/app/api/books'; // Імпортуємо тип для даних
+import { BooksResponse, RecommendBooksResponse } from '@/app/api/books'; // Імпортуємо тип для даних
 
 interface BooksListProps {
   data: RecommendBooksResponse | undefined;
@@ -73,6 +73,7 @@ interface BooksListProps {
   isError: boolean;
   page: number;
   onPageChange: (nextPage: number) => void;
+  onBookClick: (book: BooksResponse) => void;
 }
 
 export default function BooksRecommended({
@@ -81,6 +82,7 @@ export default function BooksRecommended({
   isError,
   page,
   onPageChange,
+  onBookClick,
 }: BooksListProps) {
   if (isLoading && !data) {
     return (
@@ -125,7 +127,11 @@ export default function BooksRecommended({
         <ul className="grid grid-cols-2 gap-x-4 gap-y-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
           {data?.results.map((book, index) => (
             <li key={book._id}>
-              <BookCard book={book} index={index} />
+              <BookCard
+                book={book}
+                index={index}
+                onOpenModal={() => onBookClick(book)}
+              />
             </li>
           ))}
         </ul>

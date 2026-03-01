@@ -12,26 +12,34 @@ import {
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 import RecommendedPreview from '@/components/Dashboard/RecommendedPreview';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Modal from '@/components/Modal/Modal';
+import BookDetails from '@/components/BookDetailsModal/BookDetails';
+import { Button } from '@/components/Ui/Button';
+import SuccessContent from '@/components/SuccessContentModal/SuccessContent';
 
 export default function MyLibraryPage() {
+  const router = useRouter();
   const queryClient = useQueryClient();
+  const [selectedBook, setSelectedBook] = useState<BooksResponse | null>(null);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
-  // const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const { mutate, isPending } = useMutation<
     BooksResponse,
     AxiosError<{ message: string }>,
     AddNewBookRequest
   >({
     mutationFn: addNewBook,
-    onSuccess: (data: BooksResponse) => {
+    onSuccess: () => {
       // Оновлюємо кеш списку книг, щоб нова книга з'явилася відразу
       queryClient.invalidateQueries({ queryKey: ['user-books'] });
 
       // ТЗ: Відкрити модальне вікно про успіх
       // console.log('Книга додана:', newBook);
-      // setIsSuccessModalOpen(true);
+      setIsSuccessModalOpen(true);
 
-      toast.success(`Book "${data.title}" added!`);
+      // toast.success(`Book "${data.title}" added!`);
     },
     onError: (error) => {
       // ТЗ: Обробити помилку і показати нотифікацію
@@ -64,8 +72,32 @@ export default function MyLibraryPage() {
             <RecommendedPreview />
           </Dashboard>
           <div className="bg-secondary-bg size-[stretch] flex-1 rounded-[30px] p-5 lg:p-10">
-            <MyBooksList onDeleteBook={deleteBook} />
+            <MyBooksList
+              onDeleteBook={deleteBook}
+              onBookClick={(book: BooksResponse) => setSelectedBook(book)}
+            />
           </div>
+          {selectedBook && (
+            <Modal onClose={() => setSelectedBook(null)}>
+              <BookDetails
+                book={selectedBook}
+                actionButton={
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    onClick={() => router.push(`/reading/${selectedBook._id}`)}
+                  >
+                    Start reading
+                  </Button>
+                }
+              />
+            </Modal>
+          )}
+          {isSuccessModalOpen && (
+            <Modal onClose={() => setIsSuccessModalOpen(false)}>
+              <SuccessContent type={'added'} />
+            </Modal>
+          )}
         </div>
       </div>
     </section>

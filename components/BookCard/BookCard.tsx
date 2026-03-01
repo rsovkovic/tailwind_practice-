@@ -89,20 +89,21 @@ interface Props {
   className?: string;
   isSmall?: boolean; // Додаємо цей проп
   isLibrary?: boolean;
+  onOpenModal: () => void;
 }
 
 export default function BookCard({
   book,
   index,
-  onClick,
   onDelete,
   className = '',
   isSmall = false, // По дефолту false
   isLibrary = false,
+  onOpenModal,
 }: Props) {
   return (
     <div
-      onClick={onClick}
+      onClick={onOpenModal}
       // Якщо isSmall — ширина 71px, якщо ні — 137px (або те, що прийде в className)
       className={`group cursor-pointer transition-all ${isSmall ? 'w-17.75' : 'w-full'} ${className}`}
     >

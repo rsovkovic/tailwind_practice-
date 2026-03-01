@@ -8,12 +8,13 @@ import Image from 'next/image';
 
 interface Props {
   onDeleteBook: (id: string) => void;
+  onBookClick: (book: BooksResponse) => void;
 }
-export default function MyLibraryBooks({ onDeleteBook }: Props) {
+export default function MyLibraryBooks({ onDeleteBook, onBookClick }: Props) {
   const [status, setStatus] = useState<BookStatus | undefined>(undefined);
-  const [selectedBookId, setSelectedBookId] = useState<BooksResponse | null>(
-    null,
-  );
+  // const [selectedBookId, setSelectedBookId] = useState<BooksResponse | null>(
+  //   null,
+  // );
 
   const { data, isLoading } = useQuery<BooksResponse[]>({
     queryKey: ['user-books', status],
@@ -47,13 +48,23 @@ export default function MyLibraryBooks({ onDeleteBook }: Props) {
         <div className="flex flex-col items-center justify-center py-20 text-center">
           {/* Контейнер для картинки (з макету) */}
           <div className="mb-5 flex h-25 w-25 items-center justify-center rounded-full bg-(--bg-blok) md:h-32.5 md:w-32.5">
-            <Image
-              src="/books_desktop.png" // Шлях до картинки з макету
+            {/* <Image
+              src="/books_desktop.png"
               alt="Empty library"
-              width={0.5}
-              height={0.5}
+              width={70}
+              height={70}
               className="h-12.5 w-12.5 md:h-17.5 md:w-17.5"
-            />
+            /> */}
+
+            <div className="relative h-12.5 w-12.5 md:h-17.5 md:w-17.5">
+              <Image
+                src="/books_desktop.png"
+                alt="Empty library"
+                fill
+                sizes="(max-width: 768px) 50px, 70px"
+                className="object-contain"
+              />
+            </div>
           </div>
 
           <p className="max-w-50 text-sm leading-5 md:max-w-70 lg:max-w-none">
@@ -75,7 +86,8 @@ export default function MyLibraryBooks({ onDeleteBook }: Props) {
               index={index}
               isLibrary={true}
               onDelete={() => onDeleteBook(book._id)}
-              onClick={() => setSelectedBookId(book)} // Відкриваємо модалку
+              onOpenModal={() => onBookClick(book)}
+              // onClick={() => setSelectedBookId(book)} // Відкриваємо модалку
             />
           ))}
         </div>

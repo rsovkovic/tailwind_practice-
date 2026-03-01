@@ -1,7 +1,26 @@
+import Image from 'next/image';
+
 export const Quote = () => {
   return (
-    <div className="mt-5 flex items-center gap-4 rounded-[20px] bg-(--bg-blok) p-5">
-      <span className="text-4xl">📚</span> {/* Або іконка зі спрайту */}
+    <div className="mt-5 flex items-center gap-3.5 rounded-[20px] bg-(--bg-blok) p-5">
+      {/* <span className="text-4xl">📚</span>  */}
+      {/* <div className="relative h-10 w-10">
+        <Image
+          src="/books_desktop.png"
+          alt="Empty library"
+          fill
+          sizes="40px"
+          className="object-cover"
+        />
+      </div> */}
+
+      <Image
+        src="/books_desktop.png"
+        alt="Empty library"
+        width={40} // Будь-яке ціле число, що відповідає пропорціям
+        height={40}
+        className="h-10 w-10 object-contain"
+      />
       <p className="text-sm leading-tight text-(--text-secondary)">
         &quot;Books are{' '}
         <span className="text-foreground font-medium">windows</span> to the
