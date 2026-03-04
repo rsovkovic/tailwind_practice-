@@ -6,6 +6,7 @@ import {
   fetchBooks,
   RecommendBooksResponse,
   addNewBookById,
+  getOwnBooks,
 } from '@/app/api/books';
 import { Dashboard } from '@/components/Dashboard/Dashboard';
 import { SupportBlock } from '@/components/Dashboard/Support';
@@ -74,6 +75,18 @@ export default function RecommendedPage() {
     },
   });
 
+  const { data: ownBooks } = useQuery<BooksResponse[], AxiosError>({
+    queryKey: ['user-books'],
+    queryFn: () => getOwnBooks(),
+  });
+  const isAlreadyInLibrary =
+    !!selectedBook &&
+    ownBooks?.some(
+      (ownBook) =>
+        ownBook.title.toLowerCase() === selectedBook?.title.toLowerCase() &&
+        ownBook.author.toLowerCase() === selectedBook?.author.toLowerCase(),
+    );
+
   const { data, isLoading, isError } = useQuery<RecommendBooksResponse>({
     queryKey: ['books', page, filters, limit],
     queryFn: () =>
@@ -111,18 +124,24 @@ export default function RecommendedPage() {
               <BookDetails
                 book={selectedBook}
                 actionButton={
-                  <Button
-                    type="submit"
-                    variant="outline"
-                    disabled={isPending}
-                    onClick={() => {
-                      if (selectedBook?._id) {
-                        handleAddBook(selectedBook._id);
-                      }
-                    }}
-                  >
-                    {isPending ? 'Adding...' : 'Add to library'}
-                  </Button>
+                  isAlreadyInLibrary ? (
+                    <Button variant="outline" disabled>
+                      Already in library
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      disabled={isPending}
+                      onClick={() => {
+                        if (selectedBook?._id) {
+                          handleAddBook(selectedBook._id);
+                        }
+                      }}
+                    >
+                      {isPending ? 'Adding...' : 'Add to library'}
+                    </Button>
+                  )
                 }
               />
             </Modal>

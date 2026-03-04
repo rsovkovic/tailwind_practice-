@@ -121,7 +121,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../Ui/Button';
 
 interface Props {
-  onAddBook: (data: AddNewBookRequest) => void;
+  onAddBook: (data: AddNewBookRequest, callback: () => void) => void;
   isLoading?: boolean;
 }
 
@@ -137,8 +137,12 @@ export default function AddBookForm({ onAddBook, isLoading }: Props) {
   });
 
   const onSubmit = (data: AddNewBookRequest) => {
-    onAddBook(data);
+    onAddBook(data, () => reset());
   };
+
+  // const onSubmit = (data: AddNewBookRequest) => {
+  //   onAddBook(data);
+  // };
 
   const handleReset = () => {
     reset(); // Очищає поля форми в UI
@@ -182,7 +186,7 @@ export default function AddBookForm({ onAddBook, isLoading }: Props) {
           onClick={handleReset}
           className="hover:text-foreground px-4 py-3 text-sm font-medium text-(--text-secondary) underline transition-colors"
         >
-          Reset filters
+          Reset
         </button>
       </div>
     </form>

@@ -38,7 +38,6 @@ export default function MyLibraryPage() {
       // ТЗ: Відкрити модальне вікно про успіх
       // console.log('Книга додана:', newBook);
       setIsSuccessModalOpen(true);
-
       // toast.success(`Book "${data.title}" added!`);
     },
     onError: (error) => {
@@ -68,7 +67,19 @@ export default function MyLibraryPage() {
       <div className="container">
         <div className="mt-4 mb-8 flex flex-col items-start gap-4 lg:flex-row">
           <Dashboard>
-            <AddBookForm onAddBook={handleAddBook} isLoading={isPending} />
+            {/* <AddBookForm onAddBook={handleAddBook} isLoading={isPending} /> */}
+            <AddBookForm
+              isLoading={isPending}
+              onAddBook={(data, resetForm) => {
+                // Викликаємо мутацію
+                mutate(data, {
+                  onSuccess: () => {
+                    // Тільки якщо бекенд відповів "OK" — очищуємо форму
+                    resetForm();
+                  },
+                });
+              }}
+            />
             <RecommendedPreview />
           </Dashboard>
           <div className="bg-secondary-bg size-[stretch] flex-1 rounded-[30px] p-5 lg:p-10">
